@@ -1,5 +1,4 @@
 #include <thrust/tuple.h>
-
 #include "tuple_cat.h"
 #include <iostream>
 
@@ -47,4 +46,23 @@ int main() {
         thrust::get<1>(abcd).val << " " <<
         thrust::get<2>(abcd).val << " " <<
         thrust::get<3>(abcd).val << std::endl;
+
+    //Test concatenating empty tuples.
+    thrust::tuple<> x;
+    //Empty with empty
+    x = tuple_cat(x, x);
+    //Empty in front
+    concat_type y = tuple_cat(x, abcd);
+    //Empty in back
+    y = tuple_cat(abcd, x);
+
+    //Test concatenating up to maximum tuple size
+    typedef thrust::tuple<int, int, int, int, int, int> iiiiii;
+    iiiiii six_i = thrust::make_tuple(1,2,3,4,5,6);
+    thrust::tuple_cat(abcd, six_i);
+    
+#ifdef ERROR
+    //This should static assert because the resulting tuple is too large
+    thrust::tuple_cat(six_i, six_i);
+#endif
 }

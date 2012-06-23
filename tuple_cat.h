@@ -1,6 +1,7 @@
 #pragma once
 
 #include <thrust/detail/type_traits.h>
+#include <thrust/detail/static_assert.h>
 
 namespace thrust {
 namespace detail {
@@ -30,6 +31,13 @@ struct tuple_cat_type_i {
 
 template<typename T0, typename T1>
 struct tuple_cat_type {
+    // ========================================================================
+    // X Note to the user: If you've found this line due to a compiler error, X
+    // X it's because the concatenated tuple type is too long.                X
+    // X Thrust tuples can have 10 elements, maximum.                         X
+    // ========================================================================
+    THRUST_STATIC_ASSERT(thrust::tuple_size<T0>::value + thrust::tuple_size<T1>::value <= 10);
+
     typedef thrust::tuple<
         typename detail::tuple_cat_type_i<T0, T1, 0>::type,
         typename detail::tuple_cat_type_i<T0, T1, 1>::type,
