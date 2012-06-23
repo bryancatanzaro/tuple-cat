@@ -59,7 +59,12 @@ int main() {
     //Test concatenating up to maximum tuple size
     typedef thrust::tuple<int, int, int, int, int, int> iiiiii;
     iiiiii six_i = thrust::make_tuple(1,2,3,4,5,6);
-    thrust::tuple_cat(abcd, six_i);
+    typedef thrust::tuple<A, B, C, D, int, int, int, int, int, int> maximum_tuple;
+    maximum_tuple m = thrust::tuple_cat(abcd, six_i);
+
+    //Concat empties with maximum
+    m = tuple_cat(x, m);
+    m = tuple_cat(m, x);
     
 #ifdef ERROR
     //This should static assert because the resulting tuple is too large

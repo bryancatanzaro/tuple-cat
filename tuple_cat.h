@@ -79,7 +79,6 @@ struct tuple_cat_impl{};
 template<typename T0, typename T1, typename HT, typename TT, int i>
 struct tuple_cat_impl<T0, T1, thrust::detail::cons<HT, TT>, i> {
     static const int T0L = thrust::tuple_size<T0>::value;
-    static const int T1L = thrust::tuple_size<T1>::value;
     static const bool in_T0 = i < T0L;
 
     __host__ __device__
