@@ -107,4 +107,10 @@ typename tuple_cat_type<T0, T1>::type tuple_cat(const T0& t0, const T1& t1) {
         
 }
 
+//Overload for special case of two empty tuples
+__host__ __device__
+thrust::tuple<> tuple_cat(const thrust::tuple<>& t0, const thrust::tuple<>& t1) {
+    return thrust::tuple<>();
+}
+
 } //end namespace thrust
