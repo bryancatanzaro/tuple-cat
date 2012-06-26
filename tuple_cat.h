@@ -29,11 +29,6 @@ struct flattened_tuple_element<i, thrust::null_type> {
     typedef thrust::null_type type;
 };
 
-template<int i>
-struct flattened_tuple_element<i, thrust::tuple<> > {
-    typedef thrust::null_type type;
-};
-
 } //end namespace thrust::detail
 
 template<
@@ -130,14 +125,6 @@ struct flattened_tuple_get<i, thrust::null_type> {
     }
 };
 
-template<int i>
-struct flattened_tuple_get<i, thrust::tuple<> > {
-    __host__ __device__
-    static thrust::null_type fun(const thrust::tuple<>& t) {
-        return thrust::null_type();
-    }
-};
-
 template<
     typename T0=thrust::null_type,
     typename T1=thrust::null_type,
@@ -148,7 +135,7 @@ template<
     typename T6=thrust::null_type,
     typename T7=thrust::null_type,
     typename T8=thrust::null_type,
-    typename T9=thrust::null_type>
+    typename T9=thrust::null_type >
 struct tuple_cat_impl {
     typedef thrust::tuple<
     T0, T1, T2, T3, T4,
@@ -317,6 +304,106 @@ typename tuple_cat_result<
     return detail::tuple_cat_impl<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>::fun(
         thrust::tuple<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>(
             t0, t1, t2, t3, t4, t5, t6, t7, t8, t9));
+}
+
+//Overloads for concatenating empty tuples.
+__host__ __device__
+thrust::tuple<> tuple_cat(
+    const thrust::tuple<>& t0,
+    const thrust::tuple<>& t1) {
+    return thrust::tuple<>();
+}
+
+__host__ __device__
+thrust::tuple<> tuple_cat(
+    const thrust::tuple<>& t0,
+    const thrust::tuple<>& t1,
+    const thrust::tuple<>& t2) {
+    return thrust::tuple<>();
+}
+
+__host__ __device__
+thrust::tuple<> tuple_cat(
+    const thrust::tuple<>& t0,
+    const thrust::tuple<>& t1,
+    const thrust::tuple<>& t2,
+    const thrust::tuple<>& t3) {
+    return thrust::tuple<>();
+}
+
+__host__ __device__
+thrust::tuple<> tuple_cat(
+    const thrust::tuple<>& t0,
+    const thrust::tuple<>& t1,
+    const thrust::tuple<>& t2,
+    const thrust::tuple<>& t3,
+    const thrust::tuple<>& t4) {
+    return thrust::tuple<>();
+}
+
+__host__ __device__
+thrust::tuple<> tuple_cat(
+    const thrust::tuple<>& t0,
+    const thrust::tuple<>& t1,
+    const thrust::tuple<>& t2,
+    const thrust::tuple<>& t3,
+    const thrust::tuple<>& t4,
+    const thrust::tuple<>& t5) {
+    return thrust::tuple<>();
+}
+
+__host__ __device__
+thrust::tuple<> tuple_cat(
+    const thrust::tuple<>& t0,
+    const thrust::tuple<>& t1,
+    const thrust::tuple<>& t2,
+    const thrust::tuple<>& t3,
+    const thrust::tuple<>& t4,
+    const thrust::tuple<>& t5,
+    const thrust::tuple<>& t6) {
+    return thrust::tuple<>();
+}
+
+__host__ __device__
+thrust::tuple<> tuple_cat(
+    const thrust::tuple<>& t0,
+    const thrust::tuple<>& t1,
+    const thrust::tuple<>& t2,
+    const thrust::tuple<>& t3,
+    const thrust::tuple<>& t4,
+    const thrust::tuple<>& t5,
+    const thrust::tuple<>& t6,
+    const thrust::tuple<>& t7) {
+    return thrust::tuple<>();
+}
+
+__host__ __device__
+thrust::tuple<> tuple_cat(
+    const thrust::tuple<>& t0,
+    const thrust::tuple<>& t1,
+    const thrust::tuple<>& t2,
+    const thrust::tuple<>& t3,
+    const thrust::tuple<>& t4,
+    const thrust::tuple<>& t5,
+    const thrust::tuple<>& t6,
+    const thrust::tuple<>& t7,
+    const thrust::tuple<>& t8) {
+    return thrust::tuple<>();
+}
+
+__host__ __device__
+thrust::tuple<> tuple_cat(
+    const thrust::tuple<>& t0,
+    const thrust::tuple<>& t1,
+    const thrust::tuple<>& t2,
+    const thrust::tuple<>& t3,
+    const thrust::tuple<>& t4,
+    const thrust::tuple<>& t5,
+    const thrust::tuple<>& t6,
+    const thrust::tuple<>& t7,
+    const thrust::tuple<>& t8,
+    const thrust::tuple<>& t9) {
+    return thrust::tuple<>();
 }
 
 template<typename P0T0, typename P0T1>

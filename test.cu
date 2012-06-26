@@ -48,8 +48,9 @@ int main() {
         
     //Test concatenating empty tuples.
     thrust::tuple<> x;
+    
     //Empty with empty
-    //x = tuple_cat(x, x);
+    x = tuple_cat(x, x);
     //Empty in front
     concat_type y = tuple_cat(x, abcd);
     //Empty in back
