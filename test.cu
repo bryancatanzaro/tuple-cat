@@ -1,6 +1,8 @@
 #include <thrust/tuple.h>
-#include "tuple_cat.h"
+#include "tuple_cat_jph.h"
 #include <iostream>
+#include <typeinfo>
+#include <cassert>
 
 struct A {
     int val;
@@ -37,6 +39,8 @@ int main() {
     typedef typename thrust::tuple_cat_result<
         AB, CD >::type concat_type;
 
+    assert(typeid(concat_type) == typeid(thrust::tuple<A,B,C,D>));
+
     concat_type abcd = thrust::tuple_cat(ab, cd);
     std::cout << "Should be: 4 2 3 1. Result: ";
     
@@ -45,6 +49,11 @@ int main() {
         thrust::get<1>(abcd).val << " " <<
         thrust::get<2>(abcd).val << " " <<
         thrust::get<3>(abcd).val << std::endl;
+
+    assert(4 == thrust::get<0>(abcd).val);
+    assert(2 == thrust::get<1>(abcd).val);
+    assert(3 == thrust::get<2>(abcd).val);
+    assert(1 == thrust::get<3>(abcd).val);
         
     //Test concatenating empty tuples.
     thrust::tuple<> x;
@@ -68,8 +77,14 @@ int main() {
 
     thrust::tuple_cat(thrust::tie(a.val, b.val), thrust::tie(c.val, d.val)) =
         thrust::make_tuple(5, 2, 3, 6);
+
     std::cout << "Should be: 5 2 3 6. Result: ";
     std::cout << a.val << " " << b.val << " " << c.val << " " << d.val << std::endl;
+
+    assert(a.val == 5);
+    assert(b.val == 2);
+    assert(c.val == 3);
+    assert(d.val == 6);
 
     abcd = thrust::tuple_cat(thrust::tuple<>(), ab, thrust::tuple<>(), thrust::tuple<>(), cd);
 
