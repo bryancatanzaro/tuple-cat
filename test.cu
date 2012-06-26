@@ -34,11 +34,10 @@ int main() {
                                d);
     
     
-    typedef typename thrust::tuple_cat_type<
+    typedef typename thrust::tuple_cat_result<
         AB, CD >::type concat_type;
 
     concat_type abcd = thrust::tuple_cat(ab, cd);
-
     std::cout << "Should be: 4 2 3 1. Result: ";
     
     std::cout <<
@@ -46,11 +45,11 @@ int main() {
         thrust::get<1>(abcd).val << " " <<
         thrust::get<2>(abcd).val << " " <<
         thrust::get<3>(abcd).val << std::endl;
-
+        
     //Test concatenating empty tuples.
     thrust::tuple<> x;
     //Empty with empty
-    x = tuple_cat(x, x);
+    //x = tuple_cat(x, x);
     //Empty in front
     concat_type y = tuple_cat(x, abcd);
     //Empty in back
@@ -65,7 +64,17 @@ int main() {
     //Concat empties with maximum
     m = tuple_cat(x, m);
     m = tuple_cat(m, x);
-    
+
+    thrust::tuple_cat(thrust::tie(a.val, b.val), thrust::tie(c.val, d.val)) =
+        thrust::make_tuple(5, 2, 3, 6);
+    std::cout << "Should be: 5 2 3 6. Result: ";
+    std::cout << a.val << " " << b.val << " " << c.val << " " << d.val << std::endl;
+
+    abcd = thrust::tuple_cat(thrust::tuple<>(), ab, thrust::tuple<>(), thrust::tuple<>(), cd);
+
+    six_i = thrust::tuple_cat(thrust::make_pair(3, 2),
+                              thrust::make_pair(4, 5),
+                              thrust::make_pair(6, 7));
 #ifdef ERROR
     //This should static assert because the resulting tuple is too large
     thrust::tuple_cat(six_i, six_i);
