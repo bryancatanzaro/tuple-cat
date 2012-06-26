@@ -1,5 +1,5 @@
 #include <thrust/tuple.h>
-#include "tuple_cat_jph.h"
+#include "tuple_cat.h"
 #include <iostream>
 #include <typeinfo>
 #include <cassert>
